@@ -1,0 +1,9 @@
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\bin\Debug\mdtodita.exe.config
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\bin\Debug\mdtodita.exe
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\bin\Debug\mdtodita.pdb
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\obj\Debug\mdtodita.csprojResolveAssemblyReference.cache
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\obj\Debug\mdtodita.Properties.Resources.resources
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\obj\Debug\mdtodita.csproj.GenerateResource.Cache
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\obj\Debug\mdtodita.exe
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\obj\Debug\mdtodita.pdb
+C:\Users\flepatri\git\pfletchertest\mdtodita\mdtodita\mdtodita\obj\Debug\mdtodita.MdToDitaForm.resources
