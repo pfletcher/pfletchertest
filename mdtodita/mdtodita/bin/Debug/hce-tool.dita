@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="UTF - 8"?>
+<!DOCTYPE topic PUBLIC " -//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="stackato_1.0_hce-tool">
+  <title>HCE Tool</title>
+  <body>
+<!--  **********************************************
+      *
+      * This document was created with a tool.
+      * Do not modify this document by hand.
+      *
+      *********************************************** -->
+    <p>
+      Helion Code Engine (HCE) Developer's Tool
+    </p>
+  <p><b>Synopsis</b></p>
+    <p>
+      Here are some basic commands:
+    </p>
+    <simpletable>
+      <strow><stentry><b>hce-tool                      </b></stentry><stentry> Show basic hce-tool usage</stentry></strow>
+      <strow><stentry><b>hce-tool help                 </b></stentry><stentry> Learn about hce-tool</stentry></strow>
+      <strow><stentry><b>hce-tool help --all           </b></stentry><stentry> List hce-tool commands</stentry></strow>
+      <strow><stentry><b>man hce-tool                  </b></stentry><stentry> Read complete documentation</stentry></strow>
+      <strow><stentry><b>hce-tool env                  </b></stentry><stentry> Show your environment</stentry></strow>
+      <strow><stentry><b>hce-tool up                   </b></stentry><stentry> Start Helion Code Engine</stentry></strow>
+      <strow><stentry><b>hce-tool pr                   </b></stentry><stentry> List outstanding HCE pull requests</stentry></strow>
+      <strow><stentry><b>hce-tool ls                   </b></stentry><stentry> List all HCE repos</stentry></strow>
+      <strow><stentry><b>hce-tool clone                </b></stentry><stentry> Clone all (or some) HCE repos</stentry></strow>
+      <strow><stentry><b>hce-tool pull                 </b></stentry><stentry> Pull HCE repos</stentry></strow>
+      <strow><stentry><b>hce-tool fork                 </b></stentry><stentry> Fork HCE repos</stentry></strow>
+      <strow><stentry><b>hce-tool test                 </b></stentry><stentry> Test HCE repos</stentry></strow>
+      <strow><stentry><b>hce-tool status               </b></stentry><stentry> Show status of HCE repos</stentry></strow>
+    </simpletable>
+  <p><b>Description</b></p>
+    <p>
+      The <codeph>hce-tool</codeph> command is used by HPE developers to do common development tasks
+      related to working on the Helion Code Engine project.
+    </p>
+  <p><b>Commands</b></p>
+    <p>
+      These are the hce-tool subcommands:
+    </p>
+    <dl>
+      <dlentry>
+        <dt>
+          <codeph>check [--quiet|--verbose]</codeph>
+        </dt>
+        <dd>
+          Check to make sure your environment has all the right tools installed.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>clean</codeph>
+        </dt>
+        <dd>
+          Remove all HCE and Concourse containers.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>clone &lt;hce repo name&gt;...|--all</codeph>
+        </dt>
+        <dd>
+          Clone some or all of the HCE source code repositories. See also: <codeph>ls</codeph>,
+          <codeph>pull</codeph>, <codeph>status</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>docker-down</codeph>
+        </dt>
+        <dd>
+          Stop docker-machine. Use before <codeph>docker-up</codeph> when docker is acting poorly.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>docker-up</codeph>
+        </dt>
+        <dd>
+          Start docker-machine. This will make sure that docker is usable in your
+          current shell.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>docker-size [&lt;hce repo name&gt;...]</codeph>
+        </dt>
+        <dd>
+          Check runtime sizes of containers from various repos.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>down</codeph>
+        </dt>
+        <dd>
+          Stop containers and remove containers, networks, volumes, and images
+          created by <codeph>up</codeph> for HCE. See also: <codeph>up</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>env</codeph>
+        </dt>
+        <dd>
+          Prints the environment variables used by this tool. Also tells you how and
+          where to set overrides.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>fork &lt;hce repo name&gt;...|--all</codeph>
+        </dt>
+        <dd>
+          Fork some or all of the HCE source code repositories to your personal GitHub
+          account. See also: <codeph>ls</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>help [--all|&lt;command&gt;]</codeph>
+        </dt>
+        <dd>
+          With no arguments, show the basic help overview. With <codeph>--all</codeph>, show all
+          subcommands and their usage. With a command name, show the doc for that
+          command. To see all the help use <codeph>man hce-tool</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>install-hce-cli</codeph>
+        </dt>
+        <dd>
+          Install the HCE CLI tool.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>install-git-hub</codeph>
+        </dt>
+        <dd>
+          Install and configure the <codeph>git hub</codeph> command. This command is used by other
+          <codeph>hce-tool</codeph> commands and is quite useful on its own. See
+          https://github.com/ingydotnet/git-hub#readme
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>install-tmate</codeph>
+        </dt>
+        <dd>
+          Tmate is a terminal sharing tool for pair programming. Install it. See
+          https://tmate.io
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>ls [&lt;pattern&gt;]</codeph>
+        </dt>
+        <dd>
+          List all the repo names you can use for other hce-tool commands. See also:
+          <codeph>clone</codeph>, <codeph>fork</codeph>, <codeph>pull</codeph>, <codeph>status</codeph>, <codeph>test</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>status &lt;hce repo name&gt;...|--all</codeph>
+        </dt>
+        <dd>
+          Show status for some or all of the HCE source code repositories.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>pull</codeph>
+        </dt>
+        <dd>
+          Pull the latest HCE and Concourse images.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>pr [--quiet] [--fork=&lt;git-hub-user&gt;]</codeph>
+        </dt>
+        <dd>
+          List the outstanding pull requests for all the HCE repos. Uses repos under
+          the <codeph>hpcloud</codeph> org by default. Use <codeph>--fork=...</codeph> to see PRs for a particular
+          user's forks. See also: <codeph>pr-show</codeph>
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>pr-show [--fork=&lt;git-hub-user&gt;]</codeph>
+        </dt>
+        <dd>
+          Show the full details of the outstanding pull requests for all the HCE repos.
+          See also: <codeph>pr</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>test</codeph>
+        </dt>
+        <dd>
+          Test (run unit tests on) some or all of the HCE source code repositories. See
+          also: <codeph>ls</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>up</codeph>
+        </dt>
+        <dd>
+          Stand up HCE on your local machine. If HCE_CONCOURSE_ENDPOINT contains
+          <codeph>concourse-web</codeph> or the value of <codeph>$HCE_API_HOST</codeph> it will also stand up
+          Concourse locally. See also: <codeph>down</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>update &lt;hce repo name&gt;...|--all</codeph>
+        </dt>
+        <dd>
+          Pull some or all of the HCE source code repositories. See also: <codeph>ls</codeph>,
+          <codeph>clone</codeph>, <codeph>status</codeph>.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>upgrade</codeph>
+        </dt>
+        <dd>
+          Self upgrade this <codeph>hce-tool</codeph> command to the latest version. The <codeph>upgrade</codeph>
+          command will re-source the startup <codeph>.rc</codeph> file automatically so all changes
+          should be instantly available. In rare cases, you may need to restart your
+          shell after this command.
+          </dd>
+        </dlentry>
+      <dlentry>
+        <dt>
+          <codeph>version</codeph>
+        </dt>
+        <dd>
+          Print version info for <codeph>hce-tool</codeph>.
+          </dd>
+        </dlentry>
+      </dl>
+  <p><b>Configuration</b></p>
+    <p>
+      <codeph>hce-tool</codeph> commands expect certain environment variables to be set. You can
+      either set them in your shell startup file or in "$HCE_TOOL_ROOT/config" or
+      both.
+    </p>
+    <p>
+      If you set them in "$HCE_TOOL_ROOT/config", then they will not show up in the
+      general environment. You may want to configure private variables this way.
+    </p>
+    <p>
+      The "$HCE_TOOL_ROOT/config" is just shell commands, and the file is sourced
+      internally by <codeph>hce-tool</codeph>, each time it is run.
+    </p>
+  </body>
+</topic>

@@ -3,6 +3,13 @@
    <file>
 	  <topicId>stackato_1.0_hce-tool</topicId>
       <filename>c:\Users\flepatri\git\hce-tool\doc\hce-tool.swim</filename>
-	  <outputFilename>hce-tool.dita</outputFilename>
+	  <title>HCE Tool</title>
+	  <outputFilename>C:\Users\flepatri\git\stackato.docs\stackato\ops\hce-tool.dita</outputFilename>
+   </file>
+      <file>
+	  <topicId>stackato_1.0_hcf_cli</topicId>
+      <filename>c:\Users\flepatri\git\cli\readme.md</filename>
+	  <title>HCF CLI Tool</title>
+	  <outputFilename>C:\Users\flepatri\git\stackato.docs\stackato\ops\hcf_cli.dita</outputFilename>
    </file>
 </files>

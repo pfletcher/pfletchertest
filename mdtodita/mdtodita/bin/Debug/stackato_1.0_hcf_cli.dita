@@ -1,0 +1,327 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE topic PUBLIC " -//OASIS//DTD DITA Topic//EN" "topic.dtd">
+<topic id="stackato_1.0_hcf_cli">
+  <title>HCF CLI Tool</title>
+  <body>
+<!--  **********************************************
+      *
+      * This document was created with a tool.
+      * Do not modify this document by hand.
+      *
+      *********************************************** -->
+    <p>
+      This is the official command line client for Cloud Foundry.
+    </p>
+    <p>
+      You can follow our development progress on [Pivotal Tracker](https://www.pivotaltracker.com/s/projects/892938).
+    </p>
+    <p>
+      Download and run the installer for your platform from the [Downloads Section](#downloads).
+    </p>
+    <p>
+      Once installed, you can log in and push an app.
+      ```
+      $ cd [my-app-directory]
+      $ cf api api.[my-cloudfoundry].com
+      Setting api endpoint to https://api.[my-cloudfoundry].com...
+      OK
+    </p>
+    <p>
+      $ cf login
+      API endpoint: https://api.[my-cloudfoundry].com
+    </p>
+    <p>
+      Email&gt; [my-email]
+    </p>
+    <p>
+      Password&gt; [my-password]
+      Authenticating...
+      OK
+    </p>
+    <p>
+      $ cf push
+      ```
+      #Further Reading and Getting Help
+      * You can find further documentation at the docs page for the CLI [here](http://docs.cloudfoundry.org/devguide/#cf).
+      * There is also help available in the CLI itself; type <codeph>cf help</codeph> for more information.
+      * Each command also has help output available via <codeph>cf [command] --help</codeph> or <codeph>cf [command] -h</codeph>.   
+      * For development guide on writing a cli plugin, see [here](https://github.com/cloudfoundry/cli/tree/master/plugin_examples).  
+      * Finally, if you are still stuck or have any questions or issues, feel free to open a GitHub issue.
+    </p>
+    <p>
+      **Latest stable:** Download the installer or compressed binary for your platform:
+    </p>
+    <p>
+      | | Mac OS X 64 bit | Windows 64 bit | Linux 64 bit |
+      | :---------------: | :---------------: |:---------------:| :------------:|
+      | Installers | [pkg](https://cli.run.pivotal.io/stable?release=macosx64&source=github) | [zip](https://cli.run.pivotal.io/stable?release=windows64&source=github) | [rpm](https://cli.run.pivotal.io/stable?release=redhat64&source=github) / [deb](https://cli.run.pivotal.io/stable?release=debian64&source=github) |
+      | Binaries | [tgz](https://cli.run.pivotal.io/stable?release=macosx64-binary&source=github) | [zip](https://cli.run.pivotal.io/stable?release=windows64-exe&source=github) | [tgz](https://cli.run.pivotal.io/stable?release=linux64-binary&source=github) |
+    </p>
+    <p>
+      **From the command line:** Download examples with curl for Mac OS X and Linux
+      ```
+      # ...download & extract Mac OS X binary
+      $ curl -L "https://cli.run.pivotal.io/stable?release=macosx64-binary&source=github" | tar -zx
+      # ...or Linux binary
+      $ curl -L "https://cli.run.pivotal.io/stable?release=linux64-binary&source=github" | tar -zx
+      # ...and confirm you got the version you expected
+      $ ./cf --version
+      cf version x.y.z-...
+      ```
+    </p>
+    <p>
+      **Via Homebrew:** Install CF for OSX through [Homebrew](http://brew.sh/) via the [cloudfoundry tap](https://github.com/cloudfoundry/homebrew-tap):
+    </p>
+    <p>
+      ```
+      $ brew tap cloudfoundry/tap
+      $ brew install cf-cli
+      ```
+    </p>
+    <p>
+      Also, edge binaries are published for [Mac OS X 64 bit](https://cli.run.pivotal.io/edge?arch=macosx64&source=github), [Windows 64 bit](https://cli.run.pivotal.io/edge?arch=windows64&source=github) and [Linux 64 bit](https://cli.run.pivotal.io/edge?arch=linux64&source=github) with each new 'push' that passes though CI.
+      These binaries are *not intended for wider use*; they're for developers to test new features and fixes as they are completed.
+    </p>
+    <p>
+      **Releases:** 32 bit releases and information about all our releases can be found [here](https://github.com/cloudfoundry/cli/releases)
+    </p>
+    <p>
+      Known Issues
+      ------------
+      * .cfignore used in <codeph>cf push</codeph> must be in UTF8 encoding for CLI to interpret correctly.
+    </p>
+    <p>
+      Linux
+      -----
+      * "bash: .cf: No such file or directory". Ensure that you're using the correct binary or installer for your architecture. See http://askubuntu.com/questions/133389/no-such-file-or-directory-but-the-file-exists
+    </p>
+    <p>
+      First, update to the [latest cli](https://github.com/cloudfoundry/cli/releases)
+      and try the command again.
+    </p>
+    <p>
+      If the error remains, run the command that exposes the bug with the environment
+      variable CF_TRACE set to true and [create an
+      issue](https://github.com/cloudfoundry/cli/issues).
+    </p>
+    <p>
+      Include the below information when creating the issue:
+    </p>
+    <p>
+      * The error that occurred
+      * The stack trace (if applicable)
+      * The command you ran (e.g. <codeph>cf org-users</codeph>)
+      * The CLI Version (e.g. 6.13.0-dfba612)
+      * Your platform details (e.g. Mac OS X 10.11, Windows 8.1 64-bit, Ubuntu 14.04.3 64-bit)
+      * The shell you used (e.g. Terminal, iTerm, Powershell, Cygwin, gnome-terminal, terminator)
+    </p>
+    <p>
+      ##### For simple bugs (eg: text formatting, help messages, etc), please provide
+    </p>
+    <dl>
+      <dlentry>
+        <dt>
+          the command you ran
+        </dt>
+      <dlentry>
+        <dt>
+          what occurred
+        </dt>
+      <dlentry>
+        <dt>
+          what you expected to occur
+        </dt>
+      </dl>
+    <p>
+      ##### For bugs related to HTTP requests or strange behavior, please run the command with env var <codeph>CF_TRACE=true</codeph> and provide
+    </p>
+    <dl>
+      <dlentry>
+        <dt>
+          the command you ran
+        </dt>
+      <dlentry>
+        <dt>
+          the trace output
+        </dt>
+      <dlentry>
+        <dt>
+          a high-level description of the bug
+        </dt>
+      </dl>
+    <p>
+      ##### For panics and other crashes, please provide
+    </p>
+    <dl>
+      <dlentry>
+        <dt>
+          the command you ran
+        </dt>
+      <dlentry>
+        <dt>
+          the stack trace generated (if any)
+        </dt>
+      <dlentry>
+        <dt>
+          any other relevant information
+        </dt>
+      </dl>
+    <p>
+      Major new feature proposals are given as a publically viewable google document with commenting allowed and discussed on the [cf-dev](https://lists.cloudfoundry.org/archives/list/cf-dev@lists.cloudfoundry.org/) mailing list.
+    </p>
+    <p>
+      1. Install [Go 1.6.x](https://golang.org)
+      1. Create a directory where you would like to store the source for Go projects and their binaries (e.g. <codeph>$HOME/go</codeph>)
+      1. Set an environment variable, <codeph>GOPATH</codeph>, pointing at the directory you created
+      1. Get the <codeph>cf</codeph> source: <codeph>go get github.com/cloudfoundry/cli</codeph>
+        * (Ignore any warnings about "no buildable Go source files")
+      1. [Fork this repository](https://help.github.com/articles/fork-a-repo/), adding your fork as a remote
+      1. Run our bootstrap script, <codeph>bin/bootstrap</codeph>
+      1. Write a new test, see it fail when running <codeph>bin/test</codeph> (or <codeph>ginkgo -p path/to/the/package/being/tested</codeph>)
+      1. Write code to pass the test
+      1. Repeat the above two steps until the feature is complete
+      1. Submit a [pull request](https://help.github.com/articles/using-pull-requests/) to the <codeph>master</codeph> branch
+    </p>
+    <p>
+      **_*_ For development guide on writing a cli plugin, see [here](https://github.com/cloudfoundry/cli/tree/master/plugin_examples)**
+    </p>
+    <p>
+      Architecture overview
+      ---------------------
+    </p>
+    <p>
+      A command is a struct that implements this interface:
+    </p>
+    <p>
+      ```Go
+      type Command interface {
+      	MetaData() CommandMetadata
+      	SetDependency(deps Dependency, pluginCall bool) Command
+      	Requirements(requirementsFactory requirements.Factory, context flags.FlagContext) []requirements.Requirement
+      	Execute(context flags.FlagContext)
+      }
+      ```
+      [Source code](https://github.com/cloudfoundry/cli/blob/master/cf/commandregistry/command.go#L9)
+    </p>
+    <p>
+      <codeph>Metadata()</codeph> is just a description of the command name, usage and flags:
+      ```Go
+      type CommandMetadata struct {
+      	Name            string
+      	ShortName       string
+      	Usage           []string
+      	Description     string
+      	Flags           map[string]flags.FlagSet
+      	SkipFlagParsing bool
+      	TotalArgs       int
+      	Examples        []string
+      }
+      ```
+      [Source code](https://github.com/cloudfoundry/cli/blob/master/cf/commandregistry/command.go#L16)
+    </p>
+    <p>
+      The <codeph>Examples</codeph> field represents the set of lines to be printed when printing examples in the help text.
+    </p>
+    <p>
+      <codeph>Requirements()</codeph> returns a list of requirements that need to be met before a command can be invoked.
+    </p>
+    <p>
+      <codeph>Execute()</codeph> is the method that your command implements to do whatever it's supposed to do. The <codeph>context</codeph> object
+      provides flags and arguments.
+    </p>
+    <p>
+      When the command is run, it communicates with api using repositories (they are in [<codeph>cf/api</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/api)).
+    </p>
+    <p>
+      <codeph>SetDependency()</codeph> is where a command obtains its dependencies. Dependencies are typically declared as an interface type, and not a concrete type, so tests can inject a fake.
+      The bool argument <codeph>pluginCall</codeph> indicates whether the command is invoked by one of the CLI's plugin API methods.
+    </p>
+    <p>
+      Dependencies are injected into each command, so tests can inject a fake. This means that dependencies are
+      typically declared as an interface type, and not a concrete type. (see [<codeph>cf/commandregistry/dependency.go</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/commandregistry/dependency.go))
+    </p>
+    <p>
+      Some dependencies are managed by a repository locator in [<codeph>cf/api/repository_locator.go</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/api/repository_locator.go).
+    </p>
+    <p>
+      Repositories communicate with the api endpoints through a Gateway (see [<codeph>cf/net</codeph>](https://github.com/cloudfoundry/cli/tree/master/cf/net)).
+    </p>
+    <p>
+      Models are data structures related to Cloud Foundry (see [<codeph>cf/models</codeph>](https://github.com/cloudfoundry/cli/tree/master/cf/models)). For example, some models are
+      apps, buildpacks, domains, etc.
+    </p>
+    <p>
+      Managing dependencies
+      ---------------------
+    </p>
+    <p>
+      Command dependencies are managed by the command registry package. The app uses the package (in [<codeph>cf/commandregistry/dependency.go</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/commandregistry/dependency.go)) to instantiate them, this allows not sharing the knowledge of their dependencies with the app itself.
+    </p>
+    <p>
+      For commands that use another command as dependency, <codeph>commandregistry</codeph> is used for retrieving the command dependency. For example, the command <codeph>restart</codeph> has a dependency on command <codeph>start</codeph> and <codeph>stop</codeph>, and this is how the command dependency is retrieved: [<codeph>restart.go</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/commands/application/restart.go#L59)
+    </p>
+    <p>
+      As for repositories, we use the repository locator to handle their dependencies. You can find it in [<codeph>cf/api/repository_locator.go</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/api/repository_locator.go).
+    </p>
+    <p>
+      Example command
+      ---------------
+    </p>
+    <p>
+      Create Space is a good example of a command. Its tests include checking arguments, requiring the user
+      to be logged in, and the actual behavior of the command itself. You can find it in [<codeph>cf/commands/space/create_space.go</codeph>](https://github.com/cloudfoundry/cli/blob/master/cf/commands/space/create_space.go).
+    </p>
+    <p>
+      i18n
+      ----
+      #### For Translators
+    </p>
+    <p>
+      If you'd like to submit updated translations, please see the [i18n README](https://github.com/cloudfoundry/cli/blob/master/cf/i18n/README-i18n.md) for instructions on how to submit an update.
+    </p>
+    <p>
+      #### For CLI Developers
+    </p>
+    <p>
+      If you are adding new strings or updating existing strings within the CLI code, you'll need to update the binary representation of the translation files. This file is generated/maintained using [i18n4go](https://github.com/krishicks/i18n4go), [goi18n](https://github.com/nicksnyder/go-i18n), and <codeph>bin/generate-language-resources</codeph>.
+    </p>
+    <p>
+      After adding/changing strings supplied to the goi18n <codeph>T()</codeph> translation func, run the following to update the translations binary:
+    </p>
+    <simpletable>
+      <strow><stentry><b>  i18n4go -c fixup </b></stentry><stentry> answer any prompts appropriately</stentry></strow>
+    </simpletable>
+    <p>
+          goi18n -outdir cf/i18n/resources cf/i18n/resources/*.all.json
+          bin/generate-language-resources
+    </p>
+    <p>
+      When running <codeph>i18n4go -c fixup</codeph>, you will be presented with the choices <codeph>new</codeph> or <codeph>upd</codeph> for each addition or update. Type in the appropriate choice. If <codeph>upd</codeph> is chosen, you will be asked to confirm which string is being updated using a numbered list.
+    </p>
+    <p>
+      After running the above, be sure to commit the translations binary, <codeph>cf/resources/i18n_resources.go</codeph>.
+    </p>
+    <p>
+      Creating Commands
+      -----------------
+    </p>
+    <p>
+      Resources that include several commands have been broken out into their own sub-package using the Resource name. An example of this convention is the Space resource and package (see <codeph>cf/commands/space</codeph>)
+    </p>
+    <p>
+      In addition, command file and methods naming follows a CRUD like convention. For example, the Space resource includes commands such a CreateSpace, ListSpaces, DeleteSpace, etc.
+    </p>
+    <p>
+      Creating Repositories
+      ---------------------
+    </p>
+    <p>
+      Although not ideal, we use the name "Repository" for API related operations as opposed to "Service". Repository was chosen
+      to avoid confusion with Service model objects (i.e. creating Services and Service Instances within Cloud Foundry).
+    </p>
+    <p>
+      By convention, Repository methods return a model object and an error. Models are used in both Commands and Repositories
+      to model Cloud Foundry data. This convention provides a consistent method signature across repositories.
+    </p>
+  </body>
+</topic>
