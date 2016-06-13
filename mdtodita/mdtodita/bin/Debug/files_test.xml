@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<files>
+  <file>
+	<topicId>stackato_1.0_hcf_cli</topicId>
+    <filename>test.md</filename>
+	<title>Cloud Foundry CLI Tool</title>
+	<outputFilename>C:\Users\flepatri\git\stackato.docs\stackato\ops\hcf_cli.dita</outputFilename>
+  </file>
+</files>

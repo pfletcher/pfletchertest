@@ -106,6 +106,7 @@ namespace mdtodita
                 bool inADLEntry = false;
                 bool inACodeBlock = false;
                 bool ignoredTitle = false;  //Ignore the first instance of a top-level header; convert the second into a bold para
+                bool inABulletList = false;
 
                 // Read file into list
                 while ((line = file.ReadLine()) != null) {
@@ -196,6 +197,23 @@ namespace mdtodita
                             inAList = false;
                         }
                     }
+                    if (inABulletList)
+                    {
+                        if (lineToProcess.Trim().StartsWith("* ")) //Still in bullet list
+                        {
+                            outputFileLines.Add(String.Format("      <sli>{0}</sli>", FormatDita(lineToProcess.Trim().Trim('*'))));
+                            continue;
+                        }
+                        else //No longer in list
+                        {
+                            outputFileLines.Add("    </sl>");
+                            inABulletList = false;
+                        }
+
+                    }
+                    /****************
+                    *   Conditions when we've opened a P tag
+                    ****************/
 
                     if (inAParagraph)
                     {
@@ -223,6 +241,36 @@ namespace mdtodita
                                 continue;
                             }
                         }
+                        else if (lineToProcess.StartsWith("--"))     //Subtitle?
+                        {
+                            outputFileLines[outputFileLines.Count - 1] = String.Format("    <b>{0}</b></p>", outputFileLines[outputFileLines.Count - 1].Substring(6));
+                            inAParagraph = false;
+                            continue;
+                        }
+                        else if (lineToProcess.Trim().StartsWith("#"))    //Secondary header while we think we're in a paragraph
+                        {
+                            outputFileLines.Add(String.Format("    <b>{0}</b></p>", lineToProcess.Trim().Trim('#')));
+                            inAParagraph = false;
+                            continue;
+
+                        }
+                        else if (lineToProcess.Trim().StartsWith("* "))    // New Bulletted list while we think we're in a paragraph
+                        {
+                            outputFileLines.Add("    </p>");
+                            outputFileLines.Add("    <sl>");
+                            outputFileLines.Add(String.Format("      <sli>{0}</sli>", FormatDita(lineToProcess.Trim().Trim('*'))));
+                            inABulletList = true;
+                            inAParagraph = false;
+                            continue;
+                        }
+                        else if (lineToProcess.Contains("```"))    //New code block while we think we're in a paragraph
+                        {
+                            outputFileLines.Add("    </p>");
+                            outputFileLines.Add("    <codeblock>");
+                            inACodeBlock = true;
+                            inAParagraph = false;
+                            continue;
+                        }
                         else      //Continue paragraph
                         {
                             outputFileLines.Add("      " + FormatDita(lineToProcess));
@@ -239,29 +287,48 @@ namespace mdtodita
                         }
                         else
                         {
-                            outputFileLines.Add(lineToProcess);
+                            outputFileLines.Add(FormatDita(lineToProcess));
                             continue;
                         }
                     }
                     
                     
+                    /****************************
+                    *   Conditions when we haven't started any sort of tag
+                    ****************************/
+
                     if (lineToProcess.StartsWith("  ") && lineToProcess.Contains(" #"))   //Starting a table (inATable is false if we got here)
                     {
                         outputFileLines.Add("    <simpletable>");
                         outputFileLines.Add(formatTableRow(FormatDita(lineToProcess.Substring(2))));
                         inATable = true;
                     }
-                    else if (lineToProcess.StartsWith("= "))    //Secondary header
+                    else if (lineToProcess.StartsWith("= "))    //Secondary header while we're not in a paragraph
                     {
                         outputFileLines.Add(String.Format("  <p><b>{0}</b></p>", FormatDita(lineToProcess.Substring(2))));
                         continue;
+                    }
+                    else if (lineToProcess.Trim().StartsWith("#"))    //Secondary header while we're not in a paragraph
+                    {
+                        outputFileLines.Add(String.Format("    <p><b>{0}</b></p>", lineToProcess.Trim().Trim('#')));
+                        continue;
+
+                    }
+                    else if (lineToProcess.Trim().StartsWith("* "))    //Starting a new bullet list when we're not in a P
+                    {
+                        outputFileLines.Add("    <sl>");
+                        outputFileLines.Add(String.Format("      <sli>{0}</sli>", FormatDita(lineToProcess.Trim().Trim('*'))));
+                        inABulletList = true;
+                        inAParagraph = false;
+                        continue;
+
                     }
                     else if (lineToProcess.StartsWith("- "))    //New definition list 
                     {
                         outputFileLines.Add("    <dl>");
                         outputFileLines.Add("      <dlentry>");
                         outputFileLines.Add("        <dt>");
-                        outputFileLines.Add("          " + FormatDita(lineToProcess.Substring(2)));    //TODO: Write parser for ` and such
+                        outputFileLines.Add("          " + FormatDita(lineToProcess.Substring(2)));    
                         outputFileLines.Add("        </dt>");
                         inAList = true;
                         continue;
@@ -292,14 +359,25 @@ namespace mdtodita
                     outputFileLines.Add("    </p>");
                     inAParagraph = false;
                 }
-                if (inAList)
+                if (inATable)
                 {
                     outputFileLines.Add("    </simpletable>");
-                    inAList = false;
+                    inATable = false;
                 }
                 if (inAList)
                 {
                     outputFileLines.Add("    </dl>");
+                    inAList = false;
+                }
+                if (inACodeBlock)
+                {
+                    outputFileLines.Add("    </codeblock>");
+                    inACodeBlock = false;
+                }
+                if (inABulletList)
+                {
+                    outputFileLines.Add("    </sl>");
+                    inABulletList = false;
                 }
                 
                 outputFileLines.Add("  </body>");
