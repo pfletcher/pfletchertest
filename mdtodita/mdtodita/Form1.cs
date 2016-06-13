@@ -105,6 +105,7 @@ namespace mdtodita
                 bool inAParagraph = false;
                 bool inADLEntry = false;
                 bool inACodeBlock = false;
+                bool ignoredTitle = false;  //Ignore the first instance of a top-level header; convert the second into a bold para
 
                 // Read file into list
                 while ((line = file.ReadLine()) != null) {
@@ -161,6 +162,16 @@ namespace mdtodita
                                 outputFileLines.Add("          " + FormatDita(lineToProcess.Substring(2)));
                                 continue;
                             }
+                            else if (lineToProcess.StartsWith("- ")) //New DL entry just stuck right up against the prev one
+                            {
+                                outputFileLines.Add("      </dlentry>");                             
+                                outputFileLines.Add("      <dlentry>");
+                                outputFileLines.Add("        <dt>");
+                                outputFileLines.Add("          " + FormatDita(lineToProcess.Substring(2)));
+                                outputFileLines.Add("        </dt>");
+                                continue;
+                            }
+
                         }
                         if (lineToProcess.StartsWith("- ")) //New DL entry and term
                         {
@@ -181,7 +192,7 @@ namespace mdtodita
                         
                         else //Something else besides a list; close list and move on
                         {
-                            outputFileLines.Add("      </dl>");
+                            outputFileLines.Add("    </dl>");
                             inAList = false;
                         }
                     }
@@ -196,11 +207,21 @@ namespace mdtodita
                         }
                         else if (lineToProcess.StartsWith("=="))     //Title- we're getting this from the xml file though, so we'll not do anything
                         {
-                            //Remove the previous line and paragraph tag and do nothing with this one 
-                            outputFileLines.RemoveAt(outputFileLines.Count - 1);
-                            outputFileLines.RemoveAt(outputFileLines.Count - 1);
-                            inAParagraph = false;
-                            continue;
+                            if (ignoredTitle == false)  //First instance: remove title and rely on title from files.xml
+                            {
+                                //Remove the previous line and paragraph tag and do nothing with this one 
+                                outputFileLines.RemoveAt(outputFileLines.Count - 1);
+                                outputFileLines.RemoveAt(outputFileLines.Count - 1);
+                                inAParagraph = false;
+                                ignoredTitle = true;
+                                continue;
+                            }
+                            else    //Subsequent instance: Convert previous line to bold header (it will already have a starting p tag; close out paragraph). 
+                            {
+                                outputFileLines[outputFileLines.Count - 1] = String.Format("    <b>{0}</b></p>", outputFileLines[outputFileLines.Count - 1].Substring(6));
+                                inAParagraph = false;
+                                continue;
+                            }
                         }
                         else      //Continue paragraph
                         {
@@ -210,7 +231,17 @@ namespace mdtodita
                     }
                     if (inACodeBlock)
                     {
-
+                        if (lineToProcess.Contains("```"))    //End of code block
+                        {
+                            outputFileLines.Add("    </codeblock>");
+                            inACodeBlock = false;
+                            continue;
+                        }
+                        else
+                        {
+                            outputFileLines.Add(lineToProcess);
+                            continue;
+                        }
                     }
                     
                     
@@ -235,9 +266,11 @@ namespace mdtodita
                         inAList = true;
                         continue;
                     }
-                    else if (lineToProcess.Equals("```"))    //New code block
+                    else if (lineToProcess.Contains("```"))    //New code block
                     {
-
+                        outputFileLines.Add("    <codeblock>");
+                        inACodeBlock = true;
+                        continue;
                     }
                     else if (String.IsNullOrWhiteSpace(lineToProcess)) //Probably an empty line after a heading; do nothing
                     {
@@ -259,6 +292,16 @@ namespace mdtodita
                     outputFileLines.Add("    </p>");
                     inAParagraph = false;
                 }
+                if (inAList)
+                {
+                    outputFileLines.Add("    </simpletable>");
+                    inAList = false;
+                }
+                if (inAList)
+                {
+                    outputFileLines.Add("    </dl>");
+                }
+                
                 outputFileLines.Add("  </body>");
                 outputFileLines.Add("</topic>");
                 appendLine(String.Format("Done reading {0}!", doc.topicId));
